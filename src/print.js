@@ -1,11 +1,10 @@
-import * as d3 from "d3";
 import d3KitTimeline from 'd3kit-timeline'
 import myData from './data/data.json'
 import './timeline.css'
-import { scaleLinear, scaleOrdinal, schemeCategory10 } from 'd3-scale';
 
 
 var serializedData = myData;
+var d3 = require('d3');
 
 for (var i = 0; i < serializedData.length; i++) {
   serializedData[i].time = new Date(serializedData[i].endTime);
@@ -21,10 +20,18 @@ function printMe(chart) {
   });
 
   chart.data(serializedData).visualize();
-  chart.on('labelMouseenter', function(node) {
-    console.log(node);
-    d3.select(node).style("fill", "blue");
+  chart.on('labelMouseenter', function(node, index, groups) {
+    var selection = d3.select(groups[index]).selectAll('rect');
+    selection.style("fill", "blue");
+    selection.style("fill-opacity", 1);
   });
+
+  chart.on('labelMouseleave', function(node, index, groups) {
+    var selection = d3.select(groups[index]).selectAll('rect');
+    selection.style("fill", "black");
+    selection.style("fill-opacity", 1);
+  });
+
   setTimeout(function(){
     chart.resizeToFit();
   }, 300);

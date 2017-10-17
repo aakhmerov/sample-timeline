@@ -7,7 +7,7 @@ function component() {
   var element = document.createElement('div');
   var chart = document.createElement('div');
   chart.id = "timeline"
-  
+
   element.appendChild(chart);
   printMe(chart);
 
