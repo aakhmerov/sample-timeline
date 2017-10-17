@@ -59,16 +59,18 @@ function printMe(chart) {
 
       var offset = 50;
       var tx = Math.max(targetDatum.x + rect2.node().getBBox().width, node.x + selection.node().getBBox().width) + offset*2;
-      var ty = targetDatum.y - node.y + offset;
-
-      path.arcTo(tx, ty, targetDatum.x + rect2.node().getBBox().width, targetDatum.y, 100 );
+      var ty = targetDatum.y - offset;
+      var destx = targetDatum.x + rect2.node().getBBox().width;
+      var desty = targetDatum.y;
+      path.bezierCurveTo(  node.x + selection.node().getBBox().width + 150, node.y + 50, destx + 150 , desty - 50 ,destx, desty);
+      console.log(tx, ty, destx, desty);
 
       node.visiblePath = path;
       var appended = d3.select(".main-layer").append("path")
         .attr("d", node.visiblePath.toString())
         .attr('class' , 'visiblePath')
         .attr("style", "stroke: blue; fill: none; stroke-opacity: 1; stroke-width: 2");
-      console.log(appended);
+
     }
 
   });
